@@ -113,7 +113,7 @@ def hos_enc():
     # results = session.query(spa.licensed_bed_size, spa.ED_Visit, spa.Target, spa.SPA).\
     #     order_by(spa.OSHPD_ID).all()
 
-    results =  session.query(func.avg(spa.licensed_bed_size), func.avg(spa.ED_Visit), spa.SPA).\
+    results =  session.query(func.avg(spa.licensed_bed_size), func.avg(spa.ED_Visit), func.avg(spa.Target), spa.SPA).\
         group_by(spa.SPA)
 
     # results = session.query(Hospitals_Encounters.OSHPD_ID, Hospitals_Encounters.LATITUDE).\
@@ -123,10 +123,11 @@ def hos_enc():
     # Create a dictionary from the row data and append to a list of all_hospitals
     all_spas = []
 
-    for bed, visits, no in results:
+    for bed, visits, target, no in results:
         spa_dict = {}
         spa_dict["Bed Size"] = bed
         spa_dict["ED Visits"] = visits
+        spa_dict["Target"] = target * 10
         spa_dict["SPA"] = no
         all_spas.append(spa_dict)
 
