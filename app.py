@@ -167,20 +167,22 @@ def encounters():
 
     """Return a list of dates for each prcp value"""
     # Query all dates and tobs
-    results = session.query(Encounters.oshpd_id, Encounters.facility_name, Encounters.licensed_bed_size, Encounters.control_type_desc,  Encounters.Target).\
+    results = session.query(Encounters.oshpd_id, Encounters.facility_name, Encounters.licensed_bed_size, Encounters.control_type_desc,  Encounters.Target, Encounters.LATITUDE, Encounters.LONGITUDE).\
         order_by(Encounters.Target).all()
 
     session.close()
 
     # Create a dictionary from the row data and append to a list of all_facilities
     all_encounters = []
-    for id, name, bed, type, target in results:
+    for id, name, bed, type, target, lat, lon in results:
         encounters_dict = {}
         encounters_dict["oshpd_id"] = id
         encounters_dict["facility_name"] = name
         encounters_dict["Beds"] = bed
         encounters_dict["Type"] = type
         encounters_dict["Target"] = target
+        encounters_dict["LATITUDE"] = lat
+        encounters_dict["LONGITUDE"] = lon
         all_encounters.append(encounters_dict)
 
     return jsonify(all_encounters)
