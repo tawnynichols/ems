@@ -31,7 +31,7 @@ Base.prepare(engine, reflect=True)
 # Save reference to the table
 Hospitals = Base.classes.hospitals
 Licensed  = Base.classes.LosAnglesCountyLicData
-Encounters = Base.classes.encounters
+Encounters = Base.classes.hospMergedwithTarget
 spa = Base.classes.hospMergedwithTarget
 Ed = Base.classes.LA_ed_data
 Food = Base.classes.Food_Pantry
@@ -167,20 +167,20 @@ def encounters():
 
     """Return a list of dates for each prcp value"""
     # Query all dates and tobs
-    results = session.query(Encounters.oshpd_id, Encounters.facility_name, Encounters.year, Encounters.type,  Encounters.count).\
-        order_by(Encounters.year).all()
+    results = session.query(Encounters.oshpd_id, Encounters.facility_name, Encounters.licensed_bed_size, Encounters.control_type_desc,  Encounters.Target).\
+        order_by(Encounters.Target).all()
 
     session.close()
 
     # Create a dictionary from the row data and append to a list of all_facilities
     all_encounters = []
-    for id, name, year, type, count in results:
+    for id, name, bed, type, target in results:
         encounters_dict = {}
         encounters_dict["oshpd_id"] = id
         encounters_dict["facility_name"] = name
-        encounters_dict["Year"] = year
+        encounters_dict["Beds"] = bed
         encounters_dict["Type"] = type
-        encounters_dict["Count"] = count
+        encounters_dict["Target"] = target
         all_encounters.append(encounters_dict)
 
     return jsonify(all_encounters)
