@@ -111,7 +111,7 @@ def hos_enc():
     # results = session.query(spa.licensed_bed_size, spa.ED_Visit, spa.Target, spa.SPA).\
     #     order_by(spa.OSHPD_ID).all()
 
-    results =  session.query(func.avg(spa.licensed_bed_size), func.avg(spa.ED_Visit), func.avg(spa.Target, func.avg(spa.Target_1), spa.SPA).\
+    results =  session.query(func.avg(spa.licensed_bed_size), func.avg(spa.ED_Visit), func.avg(spa.Target), func.avg(spa.Target_1), spa.SPA).\
         group_by(spa.SPA).\
             order_by(func.avg(spa.Target)).all()
 
