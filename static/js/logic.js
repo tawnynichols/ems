@@ -193,7 +193,8 @@ d3.json(hosURL, function(response) {
             var lon = response[i].LONGITUDE;
             var newwidth = response[i].Target_1 * 125;
             var newheight = response[i].Target_1 * 125;
-            var label = response[i].Target_1.toFixed(2) * 100
+            var urgent = response[i].Target_1.toFixed(2) * 100
+            var nonadmission = response[i].Target.toFixed(2) * 100
             var title = response[i].facility_name
             var type = response[i].Type
             var bed = response[i].Beds
@@ -210,7 +211,7 @@ d3.json(hosURL, function(response) {
                     iconUrl: '../png/hospital2.png'
                 });
 
-                result.push(L.marker([lat, lon], { icon: hosIcon }).bindPopup('<h4>' + title + '</h4></n><h3 style="background-color:' + setColorHos(label) + '">' + label + '% non-urgent visits' + '</h3></n>' + type + '</h3><p> Beds:' + bed + '</p>'))
+                result.push(L.marker([lat, lon], { icon: hosIcon }).bindPopup('<h4>' + title + '</h4></n><h3 style="background-color:' + setColorHos(urgent) + '">' + urgent + '% non-urgent visits' + '</h3></n><h3 style="background-color:' + setColorHos(nonadmission) + '">' + nonadmission + '% Non-Admissions' + '</h3></n>' + type + '</h3><p> Beds:' + bed + '</p>'))
                     // popup.push(L.marker.bindPopup(response[i].Name));
                     // result.push([lat, lon])
             }
@@ -292,7 +293,7 @@ function createMap(health_districts, spa, facilities, hospitals) {
     var baseMaps = {
         "Dark map": darktmap,
         "Color map": watercolormap,
-        "Ligh map": lightmap
+        "Light map": lightmap
 
     };
 
